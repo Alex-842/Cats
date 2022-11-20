@@ -21,6 +21,42 @@ header, footer {
     background-color: #222;
     color: #fff;
     padding: 0 30px;
-    
+    display: flex;
+    align-items: center;
 
+}
+header{
+    justify-content: space-between;
+
+}
+footer{
+    justify-content: center ;
+}
+main{
+    padding: 0 30px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    align-content: flex-start;
+    gap: 20px;
+}
+h1,h2,h3 {
+    margin: 0;
+}
+.card {
+    display: flex;
+    flex-direction:column ;
+    gap: 20px;
+    padding: 10px;
+    border: 1px solid;
+}
+.card-pic {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #dedede;
+    height: 160px;
+
+}
+.card h3 {
+    text-align: center;
 }
