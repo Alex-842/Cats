@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+.wrapper {
+    width: 1000px;
+    margin: auto;
+    min-height: 100vh;
+    background-color: orange;
+    display: grid;
+    gap: 30px;
+    grid-template-rows: 70px 1fr 60px;
+    
+} 
+header, footer {
+    background-color: #222;
+    color: #fff;
+    padding: 0 30px;
+    
+
+}
