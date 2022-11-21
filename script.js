@@ -55,7 +55,15 @@ const addCat = function() {
 		})
 }
 
+const popupBlock = document.querySelector(".popup-wrapper");
+popupBlock.querySelector(".popup__close").addEventListener("click", function() {
+	popupBlock.classList.remove("active");
+});
+
+
+
+
 document.querySelector("#add").addEventListener("click", function(e) {
 	e.preventDefault();
-	addCat();
+	popupBlock.classList.add("active")
 })
