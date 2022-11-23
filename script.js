@@ -22,7 +22,7 @@ const createCard = function(cat, parent) {
 
     const name = document.createElement("h3");
     name.innerText = cat.name;
-    card.append(img, name);
+    card.append(img, name, del);
     parent.append(card);
 }
 
