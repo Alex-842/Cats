@@ -1,4 +1,11 @@
 const container = document.querySelector("main");
+const popupBlock = document.querySelector(".popup-wrapper");
+const addForm = document.forms.addForm;
+
+popupBlock.querySelector(".popup__close").addEventListener("click", function() {
+	popupBlock.classList.remove("active");
+});
+
 const createCard = function(cat, parent) {
     const card = document.createElement("div");
     card.className = "card";
@@ -18,6 +25,18 @@ const createCard = function(cat, parent) {
     card.append(img, name);
     parent.append(card);
 }
+
+
+const del = document.createElement("button");
+	del.innerText = "delete";
+    del.id = cat.id;
+    del.addEventListener("click", function(e) {
+    let id = e.target.id;
+		deleteCat(id, card);
+	});
+
+
+
 // createCard({name: "Вася", img_link:"https://i.pinimg.com/originals/22/cc/3b/22cc3bfc1fede6e2306cac7265515aa3.jpg"}, container);
 
 
@@ -25,20 +44,22 @@ const createCard = function(cat, parent) {
 fetch("https://sb-cats.herokuapp.com/api/2/Alex-842/show")
 .then(res => res.json())
 .then(result => {console.log(result);
-result.data.forEach(function(el) {
-    createCard(el, container);
-}) 
-}
-)
+    if (result.message === "ok") {
+        console.log(result.data);
+        result.data.forEach(function(el) {
+            createCard(el, container);
+        })
+    }
+})
 
-const cat = {
-    id: 4,
-    name: "Василий",
-    img_link: "https://www.wallpaperflare.com/static/27/787/660/cat-muzzle-eyes-brown-wallpaper.jpg"
-}
+// const cat = {
+//     id: 4,
+//     name: "Василий",
+//     img_link: "https://www.wallpaperflare.com/static/27/787/660/cat-muzzle-eyes-brown-wallpaper.jpg"
+// }
 
 
-const addCat = function() {
+const addCat = function(cat) {
 	fetch("https://sb-cats.herokuapp.com/api/2/Alex-842/add", {
 		method: "POST",
 		headers: { // обязательно для POST/PUT/PATCH
@@ -51,14 +72,11 @@ const addCat = function() {
 			console.log(data);
 			if (data.message === "ok") {
 				createCard(cat, container);
+                addForm.reset();
 			}
 		})
 }
 
-const popupBlock = document.querySelector(".popup-wrapper");
-popupBlock.querySelector(".popup__close").addEventListener("click", function() {
-	popupBlock.classList.remove("active");
-});
 
 
 
@@ -67,3 +85,21 @@ document.querySelector("#add").addEventListener("click", function(e) {
 	e.preventDefault();
 	popupBlock.classList.add("active")
 })
+
+
+
+addForm.addEventListener("submit", function(e) {
+	e.preventDefault();
+	let body = {}; 
+
+	for (let i = 0; i < addForm.elements.length; i++) {
+		let el = addForm.elements[i];
+		console.log(el);
+		if (el.name) {
+			body[el.name] = el.name === "favourite" ? el.checked : el.value;
+		}
+	}
+
+	console.log(body);
+	addCat(body);
+});
