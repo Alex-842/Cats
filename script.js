@@ -22,18 +22,19 @@ const createCard = function(cat, parent) {
 
     const name = document.createElement("h3");
     name.innerText = cat.name;
-    card.append(img, name, del);
-    parent.append(card);
-}
 
-
-const del = document.createElement("button");
+    
+    const del = document.createElement("button");
 	del.innerText = "delete";
-    del.id = cat.id;
-    del.addEventListener("click", function(e) {
-    let id = e.target.id;
+	del.id = cat.id;
+	del.addEventListener("click", function(e) {
+		let id = e.target.id;
 		deleteCat(id, card);
 	});
+
+	card.append(img, name, del);
+	parent.append(card);
+}
 
 
 
@@ -103,3 +104,49 @@ addForm.addEventListener("submit", function(e) {
 	console.log(body);
 	addCat(body);
 });
+
+
+const deleteCat = async function(id, tag) {
+	/*
+		fetch(`https://sb-cats.herokuapp.com/api/2/Alex-842/delete/${id}`, {
+			method: "DELETE"
+		})
+		.then(res => res.json())
+		.then(data => {
+			console.log(data);
+			if (data.message === "ok") {
+				tag.remove();
+			}
+		})
+	*/
+	let res = await fetch(`https://sb-cats.herokuapp.com/api/2/Alex-842/delete/${id}`, {
+		method: "DELETE"
+	});
+
+	let data = await res.json();
+	
+	if (data.message === "ok") {
+		tag.remove();
+	}
+}
+
+
+// Вработе
+const infoBlock = document.querySelector(".info-block");
+
+const showInfo = function (data) {
+    infoBlock.classList.add("active");
+    infoBlock.firstElementChild.innerHTML = `
+        <img class="info-img" src="${data.img_link}" alt="${data.name}">
+        <div class="information">
+            <h2>${data.name}</h2>
+            <h3>${data.age} ${getWord(data.age, "год", "года", "лет")}</h3>
+            <p>${data.description}</p>
+        </div>
+        <div class="info-close" onclick="closeInfo()"></div>
+    `;
+}
+
+const closeInfo = function () {
+    infoBlock.classList.remove("active");
+}
