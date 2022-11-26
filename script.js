@@ -1,12 +1,25 @@
 const container = document.querySelector("main");
 const popupBlock = document.querySelector(".popup-wrapper");
-const popupUpd = document.querySelector(".popup-upd");
+const popupAdd = popupBlock.querySelector(".popup-add");
+const popupUpd = popupBlock.querySelector(".popup-upd");
 const addForm = document.forms.addForm;
 const updForm = document.forms.updForm;
 const cards = document.getElementsByClassName("card");
 
-popupBlock.querySelector(".popup__close").addEventListener("click", function() {
-	popupBlock.classList.remove("active");
+popupBlock.querySelectorAll(".popup__close").forEach(function(btn) {
+	btn.addEventListener("click", function() {
+		popupBlock.classList.remove("active");
+		btn.parentElement.classList.remove("active");
+		if (btn.parentElement.classList.contains("popup-upd")) {
+			updForm.dataset.id = ""; // updForm.setAttribute("data-id", "");
+		}
+	});
+});
+
+document.querySelector("#add").addEventListener("click", function(e) {
+	e.preventDefault();
+	popupBlock.classList.add("active");
+	popupAdd.classList.add("active");
 });
 
 const createCard = function(cat, parent) {
