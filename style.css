@@ -1,6 +1,7 @@
 body {
 	margin: 0;
 	font-family: sans-serif;
+	background-color: rgb(255, 185, 55);
 }
 a {
 	text-decoration: none;
@@ -10,7 +11,7 @@ a {
 
 
 .wrapper {
-	width: auto;
+	width: 1000px;
 	margin: auto;
 	min-height: 100vh;
 	background: orange;
@@ -39,7 +40,7 @@ h1, h2, h3 {
 main {
 	padding: 0 30px;
 	display: grid;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(3, 1fr);
 	align-content: flex-start;
 	gap: 30px;
 }
@@ -49,7 +50,7 @@ main {
 	gap:  20px;
 	padding: 10px;
 	border:  1px solid;
-    border-radius: 10px;
+    border-radius: 0 10px;
 }
 .card-pic {
 	background-position: center;
@@ -57,7 +58,7 @@ main {
 	background-repeat: no-repeat;
 	background-color: #dedede;
 	height: 180px;
-    border-radius: 10px;
+    border-radius: 0 10px;
 }
 .card h3 {
 	text-align: center;
@@ -88,7 +89,7 @@ main {
 }
 .popup.active {
 	display: block;
-    border-radius: 10px;
+    border-radius: 0 10px;
 }
 .popup__close {
 	width: 30px;

@@ -22,6 +22,7 @@ document.querySelector("#add").addEventListener("click", function(e) {
 	popupAdd.classList.add("active");
 });
 
+
 const createCard = function(cat, parent) {
     const card = document.createElement("div");
     card.className = "card";
