@@ -2,8 +2,10 @@ const container = document.querySelector("main");
 const popupBlock = document.querySelector(".popup-wrapper");
 const popupAdd = popupBlock.querySelector(".popup-add");
 const popupUpd = popupBlock.querySelector(".popup-upd");
+const popupInf = popupBlock.querySelector(".popup-inf");
 const addForm = document.forms.addForm;
 const updForm = document.forms.updForm;
+const infForm = document.forms.infForm;
 const cards = document.getElementsByClassName("card");
 
 popupBlock.querySelectorAll(".popup__close").forEach(function(btn) {
@@ -58,7 +60,18 @@ const createCard = function(cat, parent) {
 		updForm.setAttribute("data-id", cat.id);
 	})
 
-	card.append(img, name, del, upd);
+	const inf = document.createElement("button");
+	inf.innerText = "info";
+	inf.addEventListener("click", function(e) {
+		popupInf.classList.add("active");
+		popupBlock.classList.add("active");
+		infoForm(cat);
+		updForm.setAttribute("data-id", cat.id);
+	})
+
+
+
+	card.append(img, name, del, upd, inf);
 	parent.append(card);
 }
 
@@ -183,6 +196,18 @@ updForm.addEventListener("submit", function(e) {
 	updCat(body, updForm.dataset.id);
 });
 
+
+const updCard = function(data, id) {
+	for (let i = 0; i < cards.length; i++) {
+		let card = cards[i];
+		if (card.dataset.id === id) {
+			card.firstElementChild.style.backgroundImage = data.img_link ? `url(${data.img_link})` : `url(img/cat.png)`;
+			card.querySelector("h3").innerText = data.name || "noname";
+		}
+	}
+}
+
+
 const updCat = async function(obj, id) {
 	let res = await fetch(`https://sb-cats.herokuapp.com/api/2/Alex-842/update/${id}`, {
 		method: "PUT",
@@ -202,33 +227,18 @@ const updCat = async function(obj, id) {
 	}
 }
 
-const updCard = function(data, id) {
-	for (let i = 0; i < cards.length; i++) {
-		let card = cards[i];
-		if (card.dataset.id === id) {
-			card.firstElementChild.style.backgroundImage = data.img_link ? `url(${data.img_link})` : `url(img/cat.png)`;
-			card.querySelector("h3").innerText = data.name || "noname";
+
+
+const infoForm = function(data) {
+	console.log(data);
+	for (let i = 0; i < infForm.elements.length; i++) {
+		let el = infForm.elements[i];
+		if (el.name) {
+			if (el.type !== "checkbox") {
+				el.value = data[el.name] ? data[el.name] : "";
+			} else {
+				el.checked = data[el.name];
+			}
 		}
 	}
 }
-
-
-// Вработе
-// const infoBlock = document.querySelector(".info-block");
-
-// const showInfo = function (data) {
-//     infoBlock.classList.add("active");
-//     infoBlock.firstElementChild.innerHTML = `
-//         <img class="info-img" src="${data.img_link}" alt="${data.name}">
-//         <div class="information">
-//             <h2>${data.name}</h2>
-//             <h3>${data.age} ${getWord(data.age, "год", "года", "лет")}</h3>
-//             <p>${data.description}</p>
-//         </div>
-//         <div class="info-close" onclick="closeInfo()"></div>
-//     `;
-// }
-
-// const closeInfo = function () {
-//     infoBlock.classList.remove("active");
-// }

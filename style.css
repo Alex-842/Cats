@@ -123,3 +123,8 @@ button{
     color: #fff;
     border-radius: 7px;
 }
+#infForm h4 {
+	display: grid;
+	margin: 0;
+	gap: 5px;
+}
